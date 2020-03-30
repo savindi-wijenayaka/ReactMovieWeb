@@ -16,15 +16,22 @@ import LoadMoreBtn from "./elements/LoadMoreBtn";
 import Spinner from "./elements/Spinner";
 
 //import custom hooks
-import {useHomeFetch} from "../components/hooks/useHomeFetch"
+import { useHomeFetch } from "../components/hooks/useHomeFetch";
 
 const Home = () => {
-  const [{ state, loading, error }, fetchMovies] = useHomeFetch()
-  console.log(state)
+  const [{ state, loading, error }, fetchMovies] = useHomeFetch();
+  console.log(state);
+
+  if (!state.movies[0]) return <Spinner />;
+  if (error) return <div>Something went wrong</div>;
 
   return (
     <>
-      <HeroImage />
+      <HeroImage
+        image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${state.heroImage.backdrop_path}`}
+        title={state.heroImage.original_title}
+        text={state.heroImage.overview}
+      />
       <SearchBar />
       <Grid />
       <MovieThumb />
