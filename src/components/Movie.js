@@ -12,11 +12,11 @@ const Movie = ({ movieId }) => {
   const [movieData, loading, error] = useMovieFetch(movieId);
   
   if (error) return <div>Ooops... Something went wrong!</div>
-  if (loading) return  <Spinner/>
+  if (loading || !movieData.original_title) return  <Spinner/>
 
   return (
     <>
-      <Navigation movie={movieData.original_title} /> <MovieInfo /> <MovieInfoBar />
+      <Navigation movie={movieData.original_title} /> <MovieInfo movie={movieData}/> <MovieInfoBar />
       <Grid>
         <Actor />
       </Grid>
