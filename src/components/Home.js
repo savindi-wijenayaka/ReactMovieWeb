@@ -4,7 +4,9 @@ import {
   API_KEY,
   IMAGE_BASE_URL,
   BACKDROP_SIZE,
-  POSTER_SIZE
+  POSTER_SIZE,
+  SEARCH_BASE_URL,
+  POPULAR_BASE_URL
 } from "../config";
 
 //import components
@@ -19,7 +21,7 @@ import Spinner from "./elements/Spinner";
 import { useHomeFetch } from "../components/hooks/useHomeFetch";
 
 //import images
-import NoImage from "./images/no_image.jpg"
+import NoImage from "./images/no_image.jpg";
 
 const Home = () => {
   const [
@@ -34,12 +36,21 @@ const Home = () => {
   const [searchterm, setsearchterm] = useState("");
 
   const handleLoadMoreMovies = () => {
-    const searchEndpoint = `${API_URL}search/movie?api_key=${API_KEY}&query=${searchterm}&page=${currentPage + 1}`
-    const popularEndpoint = `${API_URL}movie/popular?api_key=${API_KEY}&page=${currentPage + 1}`
+    const searchEndpoint = `${SEARCH_BASE_URL}${searchterm}&page=${currentPage +
+      1}`;
+    const popularEndpoint = `${POPULAR_BASE_URL}&page=${currentPage + 1}`;
 
-    const endpoint = searchterm ? searchEndpoint : popularEndpoint
-    handleFetchMovies(endpoint)
-  }
+    const endpoint = searchterm ? searchEndpoint : popularEndpoint;
+    handleFetchMovies(endpoint);
+  };
+
+  const handleSearchMovies = searchKeyword => {
+    const endpoint = searchKeyword
+      ? `${SEARCH_BASE_URL}${searchKeyword}`
+      : `${POPULAR_BASE_URL}`;
+    setsearchterm(searchKeyword);
+    handleFetchMovies(endpoint);
+  };
 
   console.log(movies);
 
@@ -48,12 +59,15 @@ const Home = () => {
 
   return (
     <>
-      <HeroImage
-        image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${heroImage.backdrop_path}`}
-        title={heroImage.original_title}
-        text={heroImage.overview}
-      />
-      <SearchBar />
+      {!searchterm && (
+        <HeroImage
+          image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${heroImage.backdrop_path}`}
+          title={heroImage.original_title}
+          text={heroImage.overview}
+        />
+      )}
+
+      <SearchBar callback={handleSearchMovies} />
       <Grid header={searchterm ? "Search Results" : "Popular Movies"}>
         {movies.map(movie => (
           <MovieThumb
@@ -68,9 +82,11 @@ const Home = () => {
           />
         ))}
       </Grid>
-      
+
       {loading && <Spinner />}
-      {currentPage !== totalPages && !loading && <LoadMoreBtn text="Load More" callback={handleLoadMoreMovies}/>}
+      {currentPage !== totalPages && !loading && (
+        <LoadMoreBtn text="Load More" callback={handleLoadMoreMovies} />
+      )}
     </>
   );
 };
