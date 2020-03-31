@@ -28,10 +28,18 @@ const Home = () => {
       loading,
       error
     },
-    fetchMovies
+    handleFetchMovies
   ] = useHomeFetch();
 
   const [searchterm, setsearchterm] = useState("");
+
+  const handleLoadMoreMovies = () => {
+    const searchEndpoint = `${API_URL}search/movie?api_key=${API_KEY}&query=${searchterm}&page=${currentPage + 1}`
+    const popularEndpoint = `${API_URL}movie/popular?api_key=${API_KEY}&page=${currentPage + 1}`
+
+    const endpoint = searchterm ? searchEndpoint : popularEndpoint
+    handleFetchMovies(endpoint)
+  }
 
   console.log(movies);
 
@@ -60,8 +68,9 @@ const Home = () => {
           />
         ))}
       </Grid>
-      <LoadMoreBtn />
-      <Spinner />
+      
+      {loading && <Spinner />}
+      {currentPage !== totalPages && !loading && <LoadMoreBtn text="Load More" callback={handleLoadMoreMovies}/>}
     </>
   );
 };

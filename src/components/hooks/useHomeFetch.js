@@ -6,16 +6,21 @@ export const useHomeFetch = () => {
   const [loading, setloading] = useState(false);
   const [error, seterror] = useState(false);
 
-  const fetchMovies = async endpoint => {
+  const handleFetchMovies = async endpoint => {
     setloading(true);
     seterror(false);
+
+    const isLoading = endpoint.search("page");
 
     try {
       const result = await (await fetch(endpoint)).json();
 
       setstate(prev => ({
         ...prev,
-        movies: [...result.results],
+        movies:
+          isLoading !== -1
+            ? [...prev.movies, ...result.results]
+            : [...result.results],
         heroImage: prev.heroImage || result.results[0],
         currentPage: result.page,
         totalPages: result.total_pages
@@ -29,8 +34,8 @@ export const useHomeFetch = () => {
   };
 
   useEffect(() => {
-    fetchMovies(`${API_URL}movie/popular?api_key=${API_KEY}`);
+    handleFetchMovies(`${API_URL}movie/popular?api_key=${API_KEY}`);
   }, []);
 
-  return [{ state, loading, error }, fetchMovies];
+  return [{ state, loading, error }, handleFetchMovies];
 };
