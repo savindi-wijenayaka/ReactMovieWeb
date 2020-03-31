@@ -4,7 +4,6 @@ import NoImage from "../images/no_image.jpg";
 
 import { StyledMovieInfo } from "../styles/StyledMovieInfo";
 import MovieThumb from "./MovieThumb";
-import { element } from "prop-types";
 
 const MovieInfo = ({ movie }) => (
   <StyledMovieInfo backdrop={movie.backdrop_path}>
