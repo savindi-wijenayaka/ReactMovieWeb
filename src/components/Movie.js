@@ -2,18 +2,26 @@ import React from "react";
 import Navigation from "./elements/Navigation";
 import MovieInfo from "./elements/MovieInfo";
 import MovieInfoBar from "./elements/MovieInfoBar";
-import Grid from "./elements/Grid"
-import Actor from "./elements/Actor"
-import Spinner from "./elements/Spinner"
+import Grid from "./elements/Grid";
+import Actor from "./elements/Actor";
+import Spinner from "./elements/Spinner";
 
-const Movie = ({ movieId }) => (
-  <>
-    <Navigation /> <MovieInfo /> <MovieInfoBar />
-    <Grid>
-      <Actor />
-    </Grid>
-    <Spinner/>
-  </>
-);
+import { useMovieFetch } from "./hooks/useMovieFetch";
+
+const Movie = ({ movieId }) => {
+  const [movieData, loading, error] = useMovieFetch(movieId);
+  
+  if (error) return <div>Ooops... Something went wrong!</div>
+  if (loading) return  <Spinner/>
+
+  return (
+    <>
+      <Navigation movie={movieData.original_title} /> <MovieInfo /> <MovieInfoBar />
+      <Grid>
+        <Actor />
+      </Grid>
+    </>
+  );
+};
 
 export default Movie;
