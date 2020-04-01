@@ -14,8 +14,8 @@ const Actor = ({ actor }) => (
       }
       alt="actor image"
     />
-    <span className="actor-name">{actor.name}</span>
-    <span className="actor-character">{actor.character}</span>
+    <span className="actor-name">{actor.name}</span> 
+    <span className="actor-character">({actor.character})</span>
   </StyledActor>
 );
 export default Actor;
