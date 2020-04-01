@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledActor = styled.div`
-  font-family: 'Abel', sans-serif;
+  font-family: "Abel", sans-serif;
   color: #fff;
   background: #1c1c1c;
   border-radius: 20px;
@@ -24,7 +24,9 @@ export const StyledActor = styled.div`
 
   .actor-character {
     display: block;
-    font-size: 16px;
+    font-size: 10px;
+    color: #6e6d6d;
+    font-weight: 600;
     margin: 0 0 10px 0;
   }
 `;
