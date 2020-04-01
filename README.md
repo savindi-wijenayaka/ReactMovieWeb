@@ -1,10 +1,10 @@
 # React Movie Web Site
-Self Learning project done to get hands-on experience with React Web development concepts like Hooks, Routing, Props, State, Styled Components etc. 
 
+Self Learning project done to get hands-on experience with React Web development concepts like Hooks, Routing, Props, State, Styled Components etc.
 
 The backend used was [TMDB API](https://www.themoviedb.org/documentation/api). Bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Hosting is done using [Netlify](https://www.netlify.com/). Find the hosted project in :
 
-### [https://movie-app-savva.netlify.com/](https://movie-app-savva.netlify.com/)
+### [https://phantom-movie-app.netlify.com/](https://phantom-movie-app.netlify.com/)
 
 ## Available Scripts
 
